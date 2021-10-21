@@ -17,7 +17,6 @@ BONUS:
 
 */
 
-
 const numKm = parseInt(prompt("Quanti km vuoi percorrere?"));
 const userAge = parseInt(prompt("Quanti anni hai?"));
 const discountCode = prompt("Se hai un codice sconto, inseriscilo qui");
@@ -29,21 +28,38 @@ const under18Discount = (travelPrice * 20) / 100;
 const over65Discount = (travelPrice * 40) / 100;
 let finalPrice = 0;
 
+//controllo validità
+if (isNaN(numKm)) {
+  alert("Inserisci un valore numerico!");
+}
+if (isNaN(userAge)) {
+  alert("Inserisci un valore numerico!");
+}
+
+if (discountCode !== "SCONTO20") {
+  alert("Codice sconto non valido!");
+}
 
 
-if (discountCode === "SCONTO20" && userAge <18) {
-  finalPrice = ((travelPrice - under18Discount) - promCodeDiscount);
-} else if (discountCode === "SCONTO20" && (userAge > 18 && userAge <=20) {
+//calcoli prezzi 
+if (discountCode === "SCONTO20" && userAge < 18) {
+  finalPrice = ((travelPrice - under18Discount) - ((travelPrice - under18Discount)*20/100));
+} 
+else if (discountCode === "SCONTO20" && (userAge > 18 && userAge <= 20)) {
   finalPrice = travelPrice - promCodeDiscount;
 } 
-  else if (discountCode === "SCONTO20" && userAge > 20) {
+else if (discountCode === "SCONTO20" && userAge > 20) {
   alert("Non rientri nella fascia d'età a cui è destinato lo sconto.");
   if (userAge > 65) {
     finalPrice = travelPrice - over65Discount;
-  } else {
+  } 
+  else {
     finalPrice = travelPrice;
   }
 }
+
+//output
+document.getElementById("content").innerHTML = "Il prezzo da pagare è €"+ (Math.round(finalPrice * 100) / 100).toFixed(2);
 
 
 /* Versione base
@@ -58,4 +74,3 @@ if (userAge < 18) {
 */
 
 
-document.getElementById("content").innerHTML = "Il prezzo da pagare è €"+ (Math.round(finalPrice * 100) / 100).toFixed(2);
